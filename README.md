@@ -198,3 +198,12 @@ aunque el robot no logre completar de manera robusta todas las trayectorias en e
 ```bash
 .\.venv\Scripts\python.exe .\examples\waypoint_demo_2d.py
 ```
+
+---
+
+### Autores
+Alexandro Kurt Cárdenas Pérez
+Manuel Ferro Sánchez
+Zacbe Ortega Obregón
+Fabricio Banda Hernández
+Fernando Proal Sifuentes
