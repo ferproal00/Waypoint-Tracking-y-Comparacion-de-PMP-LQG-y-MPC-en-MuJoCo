@@ -1,6 +1,7 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
 
 
 class WaypointFollower2D:
@@ -88,9 +89,8 @@ def run_simulation(
     return robot
 
 
-def plot_static(robot, title="Waypoint-Based 2D Demo"):
+def plot_static(robot, title="Waypoint-Based 2D Demo", save_path=None):
     path = np.array(robot.path)
-    targets = np.array(robot.target_history)
     wps = robot.waypoints
 
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -109,10 +109,21 @@ def plot_static(robot, title="Waypoint-Based 2D Demo"):
     ax.grid(True, alpha=0.3)
     ax.legend()
     plt.tight_layout()
+
+    if save_path is not None:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        print(f"Imagen guardada en: {save_path}")
+
     plt.show()
+    plt.close(fig)
 
 
-def animate_simulation(robot, title="Waypoint-Based 2D Demo"):
+def animate_simulation(
+    robot,
+    title="Waypoint-Based 2D Demo",
+    save_gif_path=None,
+    fps=20,
+):
     path = np.array(robot.path)
     targets = np.array(robot.target_history)
     wps = robot.waypoints
@@ -155,17 +166,25 @@ def animate_simulation(robot, title="Waypoint-Based 2D Demo"):
         update,
         frames=len(path),
         init_func=init,
-        interval=40,
+        interval=1000 / fps,
         blit=True,
         repeat=False,
     )
 
     plt.tight_layout()
+
+    if save_gif_path is not None:
+        writer = PillowWriter(fps=fps)
+        anim.save(save_gif_path, writer=writer)
+        print(f"GIF guardado en: {save_gif_path}")
+
     plt.show()
+    plt.close(fig)
 
 
 if __name__ == "__main__":
-    # Puedes cambiar estos waypoints
+    os.makedirs("results", exist_ok=True)
+
     waypoints = [
         (0.00, 0.00),
         (0.25, 0.08),
@@ -191,8 +210,17 @@ if __name__ == "__main__":
     print(f"Reached all: {robot.reached_all}")
     print(f"Final position: {robot.pos}")
 
-    # Gráfica estática
-    plot_static(robot, title="2D Waypoint Tracking (Static Result)")
+    # Guardar imagen estática
+    plot_static(
+        robot,
+        title="2D Waypoint Tracking (Static Result)",
+        save_path="results/waypoint_demo_2d_static.png",
+    )
 
-    # Animación
-    animate_simulation(robot, title="2D Waypoint Tracking (Animation)")
+    # Guardar animación GIF
+    animate_simulation(
+        robot,
+        title="2D Waypoint Tracking (Animation)",
+        save_gif_path="results/waypoint_demo_2d.gif",
+        fps=20,
+    )
