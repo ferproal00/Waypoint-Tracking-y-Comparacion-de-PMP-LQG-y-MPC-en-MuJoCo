@@ -202,8 +202,8 @@ aunque el robot no logre completar de manera robusta todas las trayectorias en e
 ---
 
 ### Autores
-Alexandro Kurt Cárdenas Pérez
-Manuel Ferro Sánchez
-Zacbe Ortega Obregón
-Fabricio Banda Hernández
+Alexandro Kurt Cárdenas Pérez, 
+Manuel Ferro Sánchez, 
+Zacbe Ortega Obregón, 
+Fabricio Banda Hernández, 
 Fernando Proal Sifuentes
